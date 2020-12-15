@@ -36,7 +36,7 @@ dependencies {
     }
 }
 
-afterEvaluate {
+/*afterEvaluate {
     publishing {
         publications {
             // Creates a Maven publication called "release".
@@ -57,6 +57,30 @@ afterEvaluate {
                 groupId = 'com.github.adrienrx'
                 artifactId = 'timber-loggly'
                 version = '1.0.9'
+            }
+        }
+    }
+}*/
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            library(MavenPublication) {
+                setGroupId 'com.github.adrienrx'
+                //You can either define these here or get them from project conf elsewhere
+                setArtifactId 'timber-loggly'
+                setVersion '1.0.10'
+                artifact bundleReleaseAar //aar artifact you want to publish
+
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
             }
         }
     }
