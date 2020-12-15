@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.github.tony19.timber.loggly"
+        applicationId "com.github.adrienrx.timber.loggly"
         minSdkVersion 15
         targetSdkVersion 30
         versionCode 1
@@ -17,13 +17,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
 
-    compile 'com.jakewharton.timber:timber:4.1.2'
-    compile project(path: ':timber-loggly')
+    implementation 'com.jakewharton.timber:timber:4.1.2'
+    implementation project(path: ':timber-loggly')
 }
